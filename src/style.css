@@ -7,8 +7,6 @@ body {
   color: #444;
   background: #ccc;
   padding: 10px 20px;
-
-
   font-family: Helvetica, sans-serif;
 }
 
@@ -16,6 +14,13 @@ h1 {
   text-transform: capitalize;
 }
 
+#map { 
+ position: absolute; 
+ top: 150px; 
+ bottom: 150px; 
+ left:0; 
+ width: 100%; 
+}
 
 /* Make clicks pass-through */
 #nprogress {
