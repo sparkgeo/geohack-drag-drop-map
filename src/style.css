@@ -1,14 +1,31 @@
 :root {
   --sparkgeo-brand-color: #e3842d;
+  --disabled: #aaa;
 }
 
 html,
 body {
   color: #444;
   background: #ccc;
-  padding: 10px 20px;
   font-family: Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
 }
+
+main {
+  padding: 10px 20px;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  height: 50px;
+  background: white;
+  padding: 10px;
+  width: 100vw;
+}
+
 
 h1 {
   text-transform: capitalize;
@@ -57,4 +74,13 @@ h1 {
 
   justify-content: center;
   align-items: center;
+}
+
+li.disabled {
+  color: var(--disabled);
+}
+
+li.disabled::after {
+  content: '*';
+  color: var(--sparkgeo-brand-color);
 }
