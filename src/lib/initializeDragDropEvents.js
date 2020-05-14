@@ -51,9 +51,7 @@ function handleDrop(e) {
         // TODO: ADD ALL THE OTHER TRANSFORMERS HERE
         switch (type) {
           case 'csv':
-            alert('CSV not completely there yet!')
-            break
-          // return handleCSV(files[0])
+            return handleCSV(files[0])
           case 'geojson':
             return handleGeojson(files[0])
         }
