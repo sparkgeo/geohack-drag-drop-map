@@ -30,8 +30,7 @@ async function handleCSV(data) {
 
 async function handleTopoJson(data) {
   const parsedData = await getStringFromFile(data)
-
-  const geojson = await new TopoJSON(JSON.parse(parsedData)).geojson()
+  const geojson = await new TopoJSON(parsedData).geojson()
   swapLayer(geojson)
   NProgress.done
 }
@@ -50,13 +49,11 @@ function handleDrop(e) {
     determineDataType(files[0])
       .then((type) => {
         NProgress.set(0.4)
-        alert(`The file type is ${type}`)
+        // alert(`The file type is ${type}`)
         // TODO: ADD ALL THE OTHER TRANSFORMERS HERE
         switch (type) {
           case 'csv':
-            alert('CSV not completely there yet!')
-            break
-          // return handleCSV(files[0])
+            return handleCSV(files[0])
           case 'topojson':
             return handleTopoJson(files[0])
         }

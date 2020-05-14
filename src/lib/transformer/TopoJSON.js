@@ -1,13 +1,12 @@
-import * as topojson from 'topojson-client'
+import { feature } from 'topojson-client'
 
 export default class TopoJson {
   constructor(content) {
-    this.content = content
+    this.content = JSON.parse(content)
   }
 
   geojson() {
-    debugger
-
-    return topojson.merge(this.content)
+    const keys = Object.keys(this.content.objects)
+    return feature(this.content, this.content.objects[keys[0]])
   }
 }
