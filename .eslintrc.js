@@ -7,6 +7,7 @@ module.exports = {
   globals: {
     document: true,
     FileReader: true,
+    alert: true,
   },
   parser: 'babel-eslint',
   parserOptions: {
