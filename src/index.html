@@ -11,6 +11,7 @@
   <!-- CSS -->
   <link rel="stylesheet" href="../node_modules/nprogress/nprogress.css">
   <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./layers.css">
 </head>
 <body>
   <main>
@@ -29,17 +30,24 @@
 
 
     <hr />
+    <div id="main-panels-container">
 
-    <section class="drag-drop-container">
+      <section class="drag-drop-container">
 
-      <p>drop files here</p>
+        <p>drop files here</p>
 
-    </section>
+      </section>
+        
+      <div id="map" class="main-panels">
 
-    <div id="map">
+        <p>Drag Drop items here</p>
 
-      <p>Drag Drop items here</p>
-
+      </div>
+      <div id="layers" class="main-panels">
+        <div id="layers-header">Layers</div>
+        <div id="layers-list-container"></div>
+        <div id="layers-footer">Footer content</div>
+      </div>
     </div>
   </main>
   <footer>

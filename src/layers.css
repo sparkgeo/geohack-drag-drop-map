@@ -1,0 +1,27 @@
+#layers {
+    /* display: flex; */
+}
+
+#layers div {
+  padding: 15px;
+  /* flex-grow: 1; */
+}
+
+#layers-header {
+  border-radius-top: 25px;
+  border-bottom: 2px solid #ccc;
+  margin-bottom: 5px;
+}
+
+#layers-list-container {
+    
+}
+
+#layers-footer {
+    /* align-self: flex-end; */
+}
+
+.visible-layer-remover {
+  margin-left: 10px;
+  cursor: pointer;
+}

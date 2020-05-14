@@ -74,8 +74,20 @@ h1 {
 
 .drag-drop-container,
 #map {
-  width: 80vw;
+  width: 70vw;
   height: 500px;
+}
+
+#layers {
+  width: 20vw;
+  min-height: 200px;
+}
+
+#main-panels-container {
+  display: flex;
+}
+
+.main-panels {
   border-radius: 25px;
   background: white;
   margin: 20px auto;
