@@ -65,8 +65,6 @@ function handleDrop(e) {
             return handleShp(files[0])
           case 'geojson':
             return handleGeojson(files[0])
-          case 'shp':
-            return handleShp(files[0])
         }
       })
       .then((json) => {
