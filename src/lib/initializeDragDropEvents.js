@@ -21,31 +21,13 @@ function handleDrop(e) {
 
   var files = e.dataTransfer.files
 
-  alert(`There have been ${files.length} files uploaded`)
-
   if (files.length) {
-    const dataType = determineDataType(files).then((type) => {
-      debugger
-    })
-
-    // process file(s) being dropped
-    // grab the file data from each file
-    for (var i = 0, file; (file = files[i]); i++) {
-      var reader = new FileReader()
-      reader.onload = function () {
-        // loadGeoJsonString(e.target.result)
-      }
-      reader.onerror = function (e) {
-        console.error('reading failed', e)
-      }
-      reader.readAsText(file)
-    }
-  } else {
-    // process non-file (e.g. text or html) content being dropped
-    // grab the plain text version of the data
-    var plainText = e.dataTransfer.getData('text/plain')
-    if (plainText) {
-      // loadGeoJsonString(plainText)
+    try {
+      determineDataType(files).then((type) => {
+        // TODO: Determine file content
+      })
+    } catch (e) {
+      alert(e.message)
     }
   }
 
