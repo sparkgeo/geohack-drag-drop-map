@@ -1,4 +1,5 @@
 mapboxgl.accessToken = process.env.MAPBOX_TOKEN
+const layerName = 'geojson-layer'
 
 const map = new mapboxgl.Map({
   container: 'map',
@@ -7,20 +8,13 @@ const map = new mapboxgl.Map({
   zoom: 1,
 })
 
-let layerAdded = false
-
-export function swapLayer(data) {
-  const layerName = 'geojson-layer'
-
-  if (layerAdded) {
-    map.removeLayer(layerName)
-    map.removeSource(layerName)
-  }
-  layerAdded = true
-
+map.on('load', function () {
   map.addSource(layerName, {
     type: 'geojson',
-    data,
+    data: {
+      type: 'FeatureCollection',
+      features: [],
+    },
   })
 
   map.addLayer({
@@ -59,6 +53,12 @@ export function swapLayer(data) {
     },
     filter: ['==', '$type', 'LineString'],
   })
+})
+
+export function swapLayer(data) {
+  if (map.getSource(layerName) !== undefined) {
+    map.getSource(layerName).setData(data)
+  }
 }
 
 export default map

@@ -47,7 +47,7 @@ function handleDrop(e) {
     determineDataType(files[0])
       .then((type) => {
         NProgress.set(0.4)
-        alert(`The file type is ${type}`)
+        // alert(`The file type is ${type}`)
         // TODO: ADD ALL THE OTHER TRANSFORMERS HERE
         switch (type) {
           case 'csv':
