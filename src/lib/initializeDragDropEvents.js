@@ -1,6 +1,9 @@
 import NProgress from 'nprogress'
 
+import CSV from './transformer/csv'
+import getStringFromFile from './getStringFromFile'
 import determineDataType from './determineDataType'
+import map from './map'
 
 function showPanel(e) {
   e.stopPropagation()
@@ -16,6 +19,13 @@ function hidePanel() {
   document.querySelector('#map').style.display = 'flex'
 }
 
+async function handleCSV(data) {
+  const parsedData = await getStringFromFile(data)
+  const geojson = await new CSV(parsedData).geojson()
+
+  console.log('Geojson ', geojson)
+}
+
 function handleDrop(e) {
   e.preventDefault()
   e.stopPropagation()
@@ -25,18 +35,27 @@ function handleDrop(e) {
 
   var files = e.dataTransfer.files
 
-  if (files.length) {
+  if (files.length === 1) {
     NProgress.set(0.2)
     try {
-      determineDataType(files).then((type) => {
-        // TODO: Determine file content
-        alert(`The file type is ${type}`)
-        NProgress.done()
-      })
+      determineDataType(files)
+        .then((type) => {
+          NProgress.set(0.4)
+          alert(`The file type is ${type}`)
+          switch (type) {
+            case 'csv':
+              return handleCSV(files[0])
+          }
+        })
+        .then((json) => {
+          NProgress.done()
+        })
     } catch (e) {
       NProgress.done()
       alert(e.message)
     }
+  } else {
+    alert('We only accept one file at a time')
   }
 
   // prevent drag event from bubbling further
