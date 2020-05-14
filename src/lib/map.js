@@ -1,4 +1,5 @@
-mapboxgl.accessToken = process.env.MAPBOX_TOKEN
+const token = process.env.MAPBOX_TOKEN
+mapboxgl.accessToken = token
 
 const map = new mapboxgl.Map({
   container: 'map',
