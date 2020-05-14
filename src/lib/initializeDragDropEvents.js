@@ -1,6 +1,8 @@
 import NProgress from 'nprogress'
 
 import CSV from './transformer/csv'
+import TopoJSON from './transformer/TopoJSON'
+
 import getStringFromFile from './getStringFromFile'
 import determineDataType from './determineDataType'
 import map, { swapLayer } from './map'
@@ -26,6 +28,14 @@ async function handleCSV(data) {
   NProgress.done()
 }
 
+async function handleTopoJson(data) {
+  const parsedData = await getStringFromFile(data)
+
+  const geojson = await new TopoJSON(JSON.parse(parsedData)).geojson()
+  swapLayer(geojson)
+  NProgress.done
+}
+
 function handleDrop(e) {
   e.preventDefault()
   e.stopPropagation()
@@ -47,6 +57,8 @@ function handleDrop(e) {
             alert('CSV not completely there yet!')
             break
           // return handleCSV(files[0])
+          case 'topojson':
+            return handleTopoJson(files[0])
         }
       })
       .then((json) => {
