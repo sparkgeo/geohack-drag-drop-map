@@ -1,4 +1,4 @@
-import JSZip from 'jszip'
+import { parseZip } from 'shpjs'
 
 export default class Shp {
   constructor(zipContent) {
@@ -6,12 +6,6 @@ export default class Shp {
   }
 
   geojson() {
-    JSZip.loadAsync(this.zipContent)
-      .then((content) => {
-        console.log('got to here')
-      })
-      .catch((err) => {
-        console.error(`something wrong: ${err}`)
-      })
+    return parseZip(this.zipContent)
   }
 }
