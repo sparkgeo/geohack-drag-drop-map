@@ -1,6 +1,8 @@
 import NProgress from 'nprogress'
 
 import CSV from './transformer/csv'
+import Shp from './transformer/shp'
+import getArrayBufferFromFile from './getArrayBufferFromFile'
 import getStringFromFile from './getStringFromFile'
 import determineDataType from './determineDataType'
 import map, { swapLayer } from './map'
@@ -26,6 +28,13 @@ async function handleCSV(data) {
   NProgress.done()
 }
 
+async function handleShp(data) {
+  const parsedData = await getArrayBufferFromFile(data)
+  const geojson = await new Shp(parsedData).geojson()
+  swapLayer(geojson)
+  NProgress.done()
+}
+
 function handleDrop(e) {
   e.preventDefault()
   e.stopPropagation()
@@ -45,6 +54,8 @@ function handleDrop(e) {
         switch (type) {
           case 'csv':
             return handleCSV(files[0])
+          case 'shp':
+            return handleShp(files[0])
         }
       })
       .then((json) => {
