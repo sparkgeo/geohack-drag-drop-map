@@ -4,7 +4,11 @@ module.exports = {
     es6: true,
   },
   extends: ['eslint:recommended'],
-  globals: {},
+  globals: {
+    document: true,
+    FileReader: true,
+    alert: true,
+  },
   parser: 'babel-eslint',
   parserOptions: {
     sourceType: 'module',

@@ -7,8 +7,6 @@ body {
   color: #444;
   background: #ccc;
   padding: 10px 20px;
-
-
   font-family: Helvetica, sans-serif;
 }
 
@@ -16,6 +14,13 @@ h1 {
   text-transform: capitalize;
 }
 
+#map { 
+ position: absolute; 
+ top: 150px; 
+ bottom: 150px; 
+ left:0; 
+ width: 100%; 
+}
 
 /* Make clicks pass-through */
 #nprogress {
@@ -38,4 +43,26 @@ h1 {
   border-top-color: var(--sparkgeo-brand-color);
   border-left-color: var(--sparkgeo-brand-color);
 
+}
+
+
+.drag-drop-container,
+#map {
+  width: 80vw;
+  height: 500px;
+  border-radius: 25px;
+  background: white;
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.drag-drop-container {
+
+  display: none;
+  background: salmon;
+
+  justify-content: center;
+  align-items: center;
 }
