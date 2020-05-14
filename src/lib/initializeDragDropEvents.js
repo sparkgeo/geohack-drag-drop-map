@@ -1,3 +1,5 @@
+import Shp from './transformer/shp'
+
 function showPanel(e) {
   e.stopPropagation()
   e.preventDefault()
@@ -19,20 +21,22 @@ function handleDrop(e) {
 
   var files = e.dataTransfer.files
 
-  alert(`There have been ${files.length} files uploaded`)
+  // alert(`There have been ${files.length} files uploaded`)
 
   if (files.length) {
     // process file(s) being dropped
     // grab the file data from each file
     for (var i = 0, file; (file = files[i]); i++) {
       var reader = new FileReader()
-      reader.onload = function () {
+      reader.onload = function (data) {
         // loadGeoJsonString(e.target.result)
+        const shp = new Shp(data.target.result)
+        shp.geojson()
       }
       reader.onerror = function (e) {
         console.error('reading failed', e)
       }
-      reader.readAsText(file)
+      reader.readAsArrayBuffer(file)
     }
   } else {
     // process non-file (e.g. text or html) content being dropped
