@@ -26,6 +26,13 @@ async function handleCSV(data) {
   NProgress.done()
 }
 
+async function handleGeojson(data) {
+  const stringData = await getStringFromFile(data)
+  const geojson = JSON.parse(stringData)
+  swapLayer(geojson)
+  NProgress.done()
+}
+
 function handleDrop(e) {
   e.preventDefault()
   e.stopPropagation()
@@ -47,6 +54,8 @@ function handleDrop(e) {
             alert('CSV not completely there yet!')
             break
           // return handleCSV(files[0])
+          case 'geojson':
+            return handleGeojson(files[0])
         }
       })
       .then((json) => {
