@@ -15,14 +15,19 @@ export default class CSV {
     const headerRow = parsedCsv.data.slice(0, 1)[0]
     const dataRows = parsedCsv.data.slice(1)
     const wktColIdx = headerRow.findIndex((text) => text.match(/^wkt$/i))
-    resolve(
-      dataRows
+    if (wktColIdx > -1) {
+      return dataRows
         .map((dataRow) => {
           return dataRow.length > wktColIdx && dataRow[0] !== ''
             ? parseWkt(dataRow[wktColIdx])
             : undefined
         })
-        .filter((geometry) => !!geometry),
-    )
+        .filter((geometry) => !!geometry)
+    } else {
+      console.error(
+        `CSV processor requires one column headed 'wkt' with WKT geometry`,
+      )
+      return []
+    }
   }
 }
