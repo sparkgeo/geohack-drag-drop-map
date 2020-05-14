@@ -19,7 +19,7 @@ function verifyJsonFormat(file) {
  */
 
 export async function determineDataType(file) {
-  const extension = file.name.split('.')[1]
+  const extension = file.name.split('.').slice(-1)[0]
   switch (extension) {
     case 'geojson':
       return 'geojson'

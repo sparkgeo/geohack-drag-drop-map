@@ -34,7 +34,11 @@
     "mapbox-gl": "^1.10.0",
     "nprogress": "^0.2.0",
     "papaparse": "^5.2.0",
+<<<<<<< HEAD
     "topojson-client": "^3.1.0",
+=======
+    "shpjs": "^3.5.0",
+>>>>>>> master
     "wellknown": "^0.5.0"
   }
 }
