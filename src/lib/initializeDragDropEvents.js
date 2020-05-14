@@ -1,3 +1,5 @@
+import determineDataType from './determineDataType'
+
 function showPanel(e) {
   e.stopPropagation()
   e.preventDefault()
@@ -22,6 +24,10 @@ function handleDrop(e) {
   alert(`There have been ${files.length} files uploaded`)
 
   if (files.length) {
+    const dataType = determineDataType(files).then((type) => {
+      debugger
+    })
+
     // process file(s) being dropped
     // grab the file data from each file
     for (var i = 0, file; (file = files[i]); i++) {
