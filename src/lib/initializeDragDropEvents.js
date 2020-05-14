@@ -1,4 +1,9 @@
-import Shp from './transformer/shp'
+import NProgress from 'nprogress'
+
+import CSV from './transformer/csv'
+import getStringFromFile from './getStringFromFile'
+import determineDataType from './determineDataType'
+import map, { swapLayer } from './map'
 
 function showPanel(e) {
   e.stopPropagation()
@@ -14,37 +19,43 @@ function hidePanel() {
   document.querySelector('#map').style.display = 'flex'
 }
 
+async function handleCSV(data) {
+  const parsedData = await getStringFromFile(data)
+  const geojson = await new CSV(parsedData).geojson()
+  swapLayer(geojson)
+  NProgress.done()
+}
+
 function handleDrop(e) {
   e.preventDefault()
   e.stopPropagation()
   hidePanel(e)
 
+  NProgress.start()
+
   var files = e.dataTransfer.files
 
-  // alert(`There have been ${files.length} files uploaded`)
-
-  if (files.length) {
-    // process file(s) being dropped
-    // grab the file data from each file
-    for (var i = 0, file; (file = files[i]); i++) {
-      var reader = new FileReader()
-      reader.onload = function (data) {
-        // loadGeoJsonString(e.target.result)
-        const shp = new Shp(data.target.result)
-        shp.geojson()
-      }
-      reader.onerror = function (e) {
-        console.error('reading failed', e)
-      }
-      reader.readAsArrayBuffer(file)
-    }
+  if (files.length === 1) {
+    NProgress.set(0.2)
+    determineDataType(files[0])
+      .then((type) => {
+        NProgress.set(0.4)
+        alert(`The file type is ${type}`)
+        // TODO: ADD ALL THE OTHER TRANSFORMERS HERE
+        switch (type) {
+          case 'csv':
+            return handleCSV(files[0])
+        }
+      })
+      .then((json) => {
+        NProgress.done()
+      })
+      .catch((e) => {
+        NProgress.done()
+        alert(e.message)
+      })
   } else {
-    // process non-file (e.g. text or html) content being dropped
-    // grab the plain text version of the data
-    var plainText = e.dataTransfer.getData('text/plain')
-    if (plainText) {
-      // loadGeoJsonString(plainText)
-    }
+    alert('We only accept one file at a time')
   }
 
   // prevent drag event from bubbling further

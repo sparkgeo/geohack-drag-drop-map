@@ -19,11 +19,28 @@ main {
 
 footer {
   position: absolute;
+  display: flex;
+  align-items: center;
+  ;
   bottom: 0;
-  height: 50px;
+  height: 30px;
   background: white;
-  padding: 10px;
+  padding-left: 40px;
   width: 100vw;
+}
+
+footer p::before {
+  content: '*';
+  color: var(--sparkgeo-brand-color);
+  font-size: 40px;
+  position: relative;
+  top: 17px;
+  right: 12px;
+}
+
+footer p {
+  position: relative;
+  top: -7px;
 }
 
 
