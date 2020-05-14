@@ -1,3 +1,5 @@
+import NProgress from 'nprogress'
+
 import determineDataType from './determineDataType'
 
 function showPanel(e) {
@@ -19,14 +21,20 @@ function handleDrop(e) {
   e.stopPropagation()
   hidePanel(e)
 
+  NProgress.start()
+
   var files = e.dataTransfer.files
 
   if (files.length) {
+    NProgress.set(0.2)
     try {
       determineDataType(files).then((type) => {
         // TODO: Determine file content
+        alert(`The file type is ${type}`)
+        NProgress.done()
       })
     } catch (e) {
+      NProgress.done()
       alert(e.message)
     }
   }
