@@ -14,13 +14,6 @@ h1 {
   text-transform: capitalize;
 }
 
-#map { 
- position: absolute; 
- top: 150px; 
- bottom: 150px; 
- left:0; 
- width: 100%; 
-}
 
 /* Make clicks pass-through */
 #nprogress {
@@ -44,7 +37,6 @@ h1 {
   border-left-color: var(--sparkgeo-brand-color);
 
 }
-
 
 .drag-drop-container,
 #map {
