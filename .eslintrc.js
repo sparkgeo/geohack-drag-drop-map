@@ -8,6 +8,7 @@ module.exports = {
     document: true,
     FileReader: true,
     alert: true,
+    mapboxgl: true,
   },
   parser: 'babel-eslint',
   parserOptions: {
@@ -16,7 +17,9 @@ module.exports = {
   },
   plugins: ['import'],
   ignorePatterns: ['node_modules/'],
-  rules: {},
+  rules: {
+    'no-unused-vars': 'warn',
+  },
   settings: {
     react: {
       version: 'latest', // "detect" automatically picks the version you have installed.
