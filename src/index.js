@@ -3,11 +3,13 @@ import initializeLayers from './layers'
 import generateRandomString from './lib/generateRandomString'
 import { exportMapData } from './lib/map'
 import generateShareLink from './lib/generateShareLink'
+import initializeShareLoader from './lib/shareLoader'
 
 import axios, { post } from 'axios'
 
 initializeDragDropEvents()
 initializeLayers()
+initializeShareLoader()
 
 // Shares the document
 document
