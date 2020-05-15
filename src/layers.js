@@ -91,6 +91,11 @@ function initializeLayers() {
       // handle edge case where drag-drop can create two instances of a layer
       return self.indexOf(value) === index
     })
+    defaultOrderedLayers.forEach((defaultLayer) => {
+      if (orderedLayers.indexOf(defaultLayer) === -1) {
+        orderedLayers.push(defaultLayer)
+      }
+    })
     orderLayersBy(orderedLayers)
   })
   document.addEventListener('dragover', function (e) {
