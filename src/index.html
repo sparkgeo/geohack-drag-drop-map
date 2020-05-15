@@ -6,7 +6,7 @@
   <link rel="icon" type="image/png" href="./assets/favicon.png">
   <script src="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.js"></script>
   <link href="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.css" rel="stylesheet" />
-  <title>Geo Hack Project</title>
+  <title>Geospatial File Converter</title>
 
   <!-- CSS -->
   <link rel="stylesheet" href="../node_modules/nprogress/nprogress.css">
@@ -18,10 +18,10 @@
     <div style="display: flex;">
       <div style="flex-grow: 1;">
         <img src="./assets/logo-sparkgeo.svg" alt="Sparkgeo" >
-        <h1>File Converter Demo</h1>
-    
+        <h1>View and share Geodata!</h1>
+
         <p>Drag and drop geospatial data files on the map, see them on the map! Supported:</p>
-    
+
         <ul>
           <li>CSV (uses columns "WKT", "fid", "note")</li>
           <li>GeoJSON</li>
@@ -29,6 +29,8 @@
           <li>Shapefile</li>
           <li class="disabled">Geopackage</li>
         </ul>
+
+        <p><em>(but only in ESPG 4326)</em></p>
       </div>
       <div id="error-toaster"></div>
     </div>
@@ -70,7 +72,7 @@
 
   </main>
   <footer>
-     <p>- We're working on it!</p>
+     <p>Made in 2020 by <a href="https://sparkgeo.com" rel="norefferer noopener" target="_blank">Sparkgeo</a></p>
   </footer>
 
 </body>
