@@ -18,7 +18,7 @@ main {
 }
 
 footer {
-  position: absolute;
+  position: fixed;
   display: flex;
   align-items: center;
   ;
@@ -27,6 +27,8 @@ footer {
   background: white;
   padding-left: 40px;
   width: 100vw;
+
+  z-index: 9001;
 }
 
 footer p::before {
@@ -46,6 +48,29 @@ footer p {
 
 h1 {
   text-transform: capitalize;
+}
+
+.share-container {
+  width: 93vw;
+  margin: 0 auto;
+  font-size: 24px;
+  margin-bottom: 50px;
+}
+
+.share-container input[type="text"] {
+  width: 400px;
+  height: 35px;
+  padding-left: 10px;
+  padding-right: 50px;
+  font-size: 18px;
+}
+
+button#generate-link {
+  margin-left: -50px;
+  height: 41px;
+  width: 110px;
+  position: relative;
+  bottom: 2px;
 }
 
 

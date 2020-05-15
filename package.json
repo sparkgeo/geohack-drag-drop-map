@@ -4,8 +4,8 @@
   "description": "",
   "proxy": "http://localhost:9000",
   "scripts": {
-    "dev": "concurrently 'npm run dev:client' 'npm run dev:server'",
-    "dev:client": "node server.js",
+    "dev": "concurrently 'node server.js' 'npm run dev:server'",
+    "dev:client": "parcel serve src/index.html --port 3000",
     "dev:server": "netlify-lambda serve src/lambda -c webpack.server.js",
     "build": "npm run build:client && npm run build:server",
     "build:client": "parcel build src/index.html",
