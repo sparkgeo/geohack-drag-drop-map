@@ -10,6 +10,7 @@ module.exports = {
     alert: true,
     mapboxgl: true,
     File: true,
+    navigator: true,
   },
   parser: 'babel-eslint',
   parserOptions: {

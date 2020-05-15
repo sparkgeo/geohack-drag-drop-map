@@ -2,7 +2,16 @@ import initializeDragDropEvents from './lib/initializeDragDropEvents'
 import initializeLayers from './layers'
 import generateRandomString from './lib/generateRandomString'
 import { exportMapData } from './lib/map'
+import copyToClipboard from './lib/copyToClipboard'
+
 import axios, { post } from 'axios'
+
+const generateShareLink = (fileName) => {
+  const url = `https://https://data-converter.sparkgeo.app?share_token=${fileName}`
+  document.querySelector('#link-field').value = url
+
+  copyToClipboard(url)
+}
 
 document
   .querySelector('#generate-link')
@@ -28,21 +37,28 @@ document
       mimeType: fileType,
     }).catch((e) => {
       console.error('Error in generating signed url ', e)
+      alert('Error: Share was not successful')
+      return
     })
 
-    // create a `File` object
-    const file = new File([fileData], fileName, { type: fileType })
+    if (data) {
+      // create a `File` object
+      const file = new File([fileData], fileName, { type: fileType })
 
-    await axios({
-      method: 'PUT',
-      url: data.putUrl,
-      data: file,
-      headers: { 'Content-Type': fileType, 'Content-Encoding': 'base64' },
-    }).catch((e) => {
-      console.error('Error in uploading file ', e)
-    })
-
-    // TODO update sharing link with link url
+      axios({
+        method: 'PUT',
+        url: data.putUrl,
+        data: file,
+        headers: { 'Content-Type': fileType, 'Content-Encoding': 'base64' },
+      })
+        .then(() => {
+          generateShareLink(fileName)
+        })
+        .catch((e) => {
+          console.error('Error in uploading file ', e)
+          alert('Error: Share was not successful')
+        })
+    }
   })
 
 initializeDragDropEvents()
