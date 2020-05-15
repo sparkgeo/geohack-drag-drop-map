@@ -1,10 +1,13 @@
 import initializeDragDropEvents from './lib/initializeDragDropEvents'
 import initializeLayers from './layers'
+import generateRandomString from './lib/generateRandomString'
 
 document.querySelector('#generate-link').addEventListener('click', function () {
   console.log('Click detected')
 
-  // TODO generate string
+  const fileName = `${generateRandomString()}.json`
+
+  console.log('file name ', fileName)
 
   // TODO consolidate geojson into file
 
