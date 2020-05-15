@@ -1,11 +1,14 @@
-import map, { swapLayer, subscribeToDataUpdates } from './lib/map'
-
-let sourceDataCache
+import {
+  subscribeToDataUpdates,
+  filterSourceData,
+  setSwapStrategy,
+  defaultSwapStrategy,
+} from './lib/map'
+import { SwapStrategy } from './lib/swapStrategy'
 
 function initializeLayers() {
-  let visibleLayers = []
   subscribeToDataUpdates(function (sourceData) {
-    sourceDataCache = sourceData
+    let visibleLayers = []
     const features =
       sourceData && sourceData.features ? sourceData.features : []
     if (features.length) {
@@ -40,13 +43,15 @@ function initializeLayers() {
       .join('')
   })
   document.addEventListener('removeLayer', (data) => {
-    const updatedSource = Object.assign({}, sourceDataCache, {
-      features: sourceDataCache.features.filter((feature) => {
-        return !filterFeatureByGeometryType(feature, data.detail)
-      }),
+    filterSourceData((feature) => {
+      return !filterFeatureByGeometryType(feature, data.detail)
     })
-    swapLayer(updatedSource)
   })
+  const dndReplaceCheckbox = document.getElementById('dnd-replace')
+  dndReplaceCheckbox.checked = defaultSwapStrategy === SwapStrategy.REPLACE
+  dndReplaceCheckbox.onchange = function () {
+    setSwapStrategy(this.checked ? SwapStrategy.REPLACE : SwapStrategy.ADD)
+  }
 }
 
 function filterFeatureByGeometryType(feature, geometryType) {

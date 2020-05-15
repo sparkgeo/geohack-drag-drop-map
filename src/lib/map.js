@@ -1,5 +1,11 @@
+import { SwapStrategy } from './swapStrategy'
+
 mapboxgl.accessToken = process.env.MAPBOX_TOKEN
 const layerName = 'geojson-layer'
+export const defaultSwapStrategy = SwapStrategy.REPLACE
+
+let sourceDataCache
+let dataSwapStrategy = defaultSwapStrategy
 
 const zoomToFeatures = (mapData) => {
   const bounds = new mapboxgl.LngLatBounds()
@@ -73,11 +79,33 @@ map.on('load', function () {
   })
 })
 
-export function swapLayer(data) {
+export function swapLayer(data, requestedSwapStrategy) {
   if (map.getSource(layerName) !== undefined) {
-    map.getSource(layerName).setData(data)
+    let newSourceData
+    const swapStrategy =
+      requestedSwapStrategy === undefined
+        ? dataSwapStrategy
+        : requestedSwapStrategy
+    switch (swapStrategy) {
+      case SwapStrategy.ADD:
+        if (sourceDataCache) {
+          newSourceData = Object.assign({}, sourceDataCache, {
+            fileName: `multiple`,
+            features: [...sourceDataCache.features, ...data.features],
+          })
+          break
+        }
+      // fall through if no sourceDataCache as it is effectively a REPLACE
+      case SwapStrategy.REPLACE:
+        newSourceData = data
+        break
+    }
+    map.getSource(layerName).setData(newSourceData)
+    if (newSourceData.features.length) {
+      zoomToFeatures(newSourceData)
+    }
+    sourceDataCache = Object.freeze(Object.assign({}, newSourceData)) // store an immutable copy of data for future reference
   }
-  zoomToFeatures(data)
 }
 
 export function subscribeToDataUpdates(callback) {
@@ -86,6 +114,23 @@ export function subscribeToDataUpdates(callback) {
       callback(event.source.data)
     }
   })
+}
+
+export function filterSourceData(filter) {
+  const updatedSource = Object.assign({}, sourceDataCache, {
+    features: sourceDataCache.features.filter((feature) => {
+      return filter(feature)
+    }),
+  })
+  swapLayer(updatedSource, SwapStrategy.REPLACE)
+}
+
+export function setSwapStrategy(newSwapStrategy) {
+  dataSwapStrategy = newSwapStrategy
+}
+
+export function exportMapData() {
+  return sourceDataCache
 }
 
 export default map
