@@ -1,6 +1,6 @@
 import NProgress from 'nprogress'
 
-import {CSV, TopoJSON, Shp} from './transformer'
+import { CSV, TopoJSON, Shp } from './transformer'
 
 import getArrayBufferFromFile from './getArrayBufferFromFile'
 import getStringFromFile from './getStringFromFile'
@@ -104,4 +104,5 @@ function initializeDragDropEvents() {
   dropContainer.addEventListener('dragleave', hidePanel, false)
 }
 
+exports.handleGeojson = handleGeojson
 export default initializeDragDropEvents
