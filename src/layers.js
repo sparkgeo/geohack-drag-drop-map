@@ -3,24 +3,26 @@ import {
   filterSourceData,
   setSwapStrategy,
   defaultSwapStrategy,
+  orderLayersBy,
+  defaultOrderedLayers,
 } from './lib/map'
 import { SwapStrategy } from './lib/swapStrategy'
 
+let orderedLayers
 function initializeLayers() {
   subscribeToDataUpdates(function (sourceData) {
     let visibleLayers = []
+    orderedLayers = !!orderedLayers ? orderedLayers : defaultOrderedLayers
     const features =
       sourceData && sourceData.features ? sourceData.features : []
     if (features.length) {
-      visibleLayers = ['Point', 'LineString', 'Polygon', 'MultiPolygon'].filter(
-        (layerName) => {
-          return (
-            features.filter((feature) =>
-              filterFeatureByGeometryType(feature, layerName),
-            ).length > 0
-          )
-        },
-      )
+      visibleLayers = orderedLayers.filter((layerName) => {
+        return (
+          features.filter((feature) =>
+            filterFeatureByGeometryType(feature, layerName),
+          ).length > 0
+        )
+      })
     }
     document.getElementById('layers-list-container').innerHTML = visibleLayers
       .map((visibleLayerName) => {
@@ -30,7 +32,8 @@ function initializeLayers() {
             id="visible-layer-${visibleLayerName}"
             draggable="true"
             ondragover="document.dispatchEvent(new CustomEvent('dragOver', {detail: event}))"
-            ondragstart="document.dispatchEvent(new CustomEvent('dragStart', {detail: event}))">
+            ondragstart="document.dispatchEvent(new CustomEvent('dragStart', {detail: event}))"
+            ondragend="document.dispatchEvent(new CustomEvent('dragEnd'))">
             <div
               class="visible-layer-name">
               ${visibleLayerName} Layer
@@ -51,10 +54,11 @@ function initializeLayers() {
     })
   })
   let draggedElement
+  // drag-drop adapted from https://stackoverflow.com/a/28962290/519575
   document.addEventListener('dragStart', (event) => {
     const dragEvent = event.detail
     dragEvent.dataTransfer.effectAllowed = 'move'
-    dragEvent.dataTransfer.setData('text/plain', null) // Thanks to bqlou for their comment.
+    dragEvent.dataTransfer.setData('text/plain', null)
     draggedElement = dragEvent.target
   })
   document.addEventListener('dragOver', (event) => {
@@ -73,6 +77,22 @@ function initializeLayers() {
       }
     }
   })
+  document.addEventListener('dragEnd', () => {
+    const orderedLayerElements = document.querySelectorAll(
+      '#layers-list-container .visible-layer',
+    )
+    let ordered = []
+    for (let i = 0; i < orderedLayerElements.length; i++) {
+      ordered.push(
+        orderedLayerElements.item(i).id.replace(/^visible\-layer\-/, ''),
+      )
+    }
+    orderedLayers = ordered.filter((value, index, self) => {
+      // handle edge case where drag-drop can create two instances of a layer
+      return self.indexOf(value) === index
+    })
+    orderLayersBy(orderedLayers)
+  })
   document.addEventListener('dragover', function (e) {
     e.preventDefault()
   })
@@ -84,6 +104,9 @@ function initializeLayers() {
 }
 
 function filterFeatureByGeometryType(feature, geometryType) {
+  if (geometryType === 'Polygon') {
+    return ['Polygon', 'MultiPolygon'].indexOf(feature.geometry.type) > -1
+  }
   return feature.geometry.type === geometryType
 }
 
