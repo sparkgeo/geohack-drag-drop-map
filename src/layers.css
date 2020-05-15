@@ -31,4 +31,6 @@
   bottom: 0;
   padding: 1em;
   border-top: 2px solid #ccc;
+  width: 100%;
+  box-sizing: border-box;
 }
