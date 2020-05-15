@@ -1,31 +1,30 @@
-import map, { swapLayer } from './lib/map'
-
-let sourceData
+import {
+  subscribeToDataUpdates,
+  filterSourceData,
+  setSwapStrategy,
+  defaultSwapStrategy,
+} from './lib/map'
+import { SwapStrategy } from './lib/swapStrategy'
 
 function initializeLayers() {
-  map.on('sourcedata', function (event) {
-    if (event.sourceId === 'geojson-layer') {
-      let visibleLayers = []
-      sourceData = event.source.data
-      const features =
-        sourceData && sourceData.features ? sourceData.features : []
-      if (features.length) {
-        visibleLayers = [
-          'Point',
-          'LineString',
-          'Polygon',
-          'MultiPolygon',
-        ].filter((layerName) => {
+  subscribeToDataUpdates(function (sourceData) {
+    let visibleLayers = []
+    const features =
+      sourceData && sourceData.features ? sourceData.features : []
+    if (features.length) {
+      visibleLayers = ['Point', 'LineString', 'Polygon', 'MultiPolygon'].filter(
+        (layerName) => {
           return (
             features.filter((feature) =>
               filterFeatureByGeometryType(feature, layerName),
             ).length > 0
           )
-        })
-      }
-      document.getElementById('layers-list-container').innerHTML = visibleLayers
-        .map((visibleLayerName) => {
-          return `
+        },
+      )
+    }
+    document.getElementById('layers-list-container').innerHTML = visibleLayers
+      .map((visibleLayerName) => {
+        return `
           <div
             class="visible-layer"
             id="visible-layer-${visibleLayerName}">
@@ -40,18 +39,19 @@ function initializeLayers() {
               x
             </div>
           </div>`
-        })
-        .join('')
-    }
+      })
+      .join('')
   })
   document.addEventListener('removeLayer', (data) => {
-    const updatedSource = Object.assign({}, sourceData, {
-      features: sourceData.features.filter((feature) => {
-        return !filterFeatureByGeometryType(feature, data.detail)
-      }),
+    filterSourceData((feature) => {
+      return !filterFeatureByGeometryType(feature, data.detail)
     })
-    swapLayer(updatedSource)
   })
+  const dndReplaceCheckbox = document.getElementById('dnd-replace')
+  dndReplaceCheckbox.checked = defaultSwapStrategy === SwapStrategy.REPLACE
+  dndReplaceCheckbox.onchange = function () {
+    setSwapStrategy(this.checked ? SwapStrategy.REPLACE : SwapStrategy.ADD)
+  }
 }
 
 function filterFeatureByGeometryType(feature, geometryType) {

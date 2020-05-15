@@ -42,7 +42,7 @@
         <p>drop files here</p>
 
       </section>
-        
+
       <div id="map" class="main-panels">
 
         <p>Drag Drop items here</p>
@@ -51,8 +51,23 @@
       <div id="layers" class="main-panels">
         <div id="layers-header">Layers</div>
         <div id="layers-list-container"></div>
+        <div id="layers-list-footer">
+          <input
+            id="dnd-replace"
+            type="checkbox" />
+          <label for="dnd-replace">
+            Replace existing data
+          </label>
+        </div>
       </div>
     </div>
+
+    <section class="share-container">
+      <h2>Generate a sharing link</h2>
+      <input type="text" placeholder="Generate link" />
+      <button id="generate-link">Generate</button>
+    </section>
+
   </main>
   <footer>
      <p>- We're working on it!</p>

@@ -105,4 +105,5 @@ function initializeDragDropEvents() {
   dropContainer.addEventListener('dragleave', hidePanel, false)
 }
 
+exports.handleGeojson = handleGeojson
 export default initializeDragDropEvents
