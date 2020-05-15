@@ -42,12 +42,12 @@
   "dependencies": {
     "aws-sdk": "^2.677.0",
     "axios": "^0.19.2",
-    "cuid": "^2.1.8",
     "express": "^4.17.1",
     "http-proxy-middleware": "^1.0.3",
     "mapbox-gl": "^1.10.0",
     "nprogress": "^0.2.0",
     "papaparse": "^5.2.0",
+    "t": "^0.5.1",
     "parcel-proxy-server": "^1.1.0",
     "shpjs": "^3.5.0",
     "topojson-client": "^3.1.0",
