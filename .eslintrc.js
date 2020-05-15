@@ -9,6 +9,7 @@ module.exports = {
     FileReader: true,
     alert: true,
     mapboxgl: true,
+    File: true,
   },
   parser: 'babel-eslint',
   parserOptions: {
