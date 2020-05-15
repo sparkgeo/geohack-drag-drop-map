@@ -1,0 +1,36 @@
+#layers {
+  position: relative;
+}
+
+#layers-header {
+  padding: 1em;
+  border-radius-top: 25px;
+  border-bottom: 2px solid #ccc;
+  margin-bottom: 5px;
+}
+
+#layers-list-container .visible-layer {
+  justify-content: space-between;
+  display: flex;
+  font-size: 0.9em;
+  margin: 0.5em;
+  line-height: 1.5em;
+}
+
+.visible-layer-remover {
+  margin-left: 10px;
+  cursor: pointer;
+  color: darkred;
+  padding: 0 10px;
+  font-size: 1.5em;
+}
+
+#layers-list-footer {
+  font-size: 0.9em;
+  position: absolute;
+  bottom: 0;
+  padding: 1em;
+  border-top: 2px solid #ccc;
+  width: 100%;
+  box-sizing: border-box;
+}

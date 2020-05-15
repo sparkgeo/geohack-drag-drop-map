@@ -2,11 +2,16 @@
   "name": "geohack-drag-drop-map",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "proxy": "http://localhost:9000",
   "scripts": {
-    "dev": "parcel serve src/index.html --port 3000",
-    "build": "parcel build src/index.html --no-minify --no-source-maps",
-    "lint": "eslint \"src/**/*.js\""
+    "dev": "concurrently 'node server.js' 'npm run dev:server'",
+    "dev:client": "parcel serve src/index.html --port 3000",
+    "dev:server": "netlify-lambda serve src/lambda -c webpack.server.js",
+    "build": "npm run build:client && npm run build:server",
+    "build:client": "parcel build src/index.html --no-minify --no-source-maps",
+    "build:server": "netlify-lambda build src/lambda",
+    "lint": "eslint \"src/**/*.js\"",
+    "postinstall": "netlify-lambda install"
   },
   "repository": {
     "type": "git",
@@ -25,8 +30,12 @@
     "@babel/polyfill": "^7.8.7",
     "@babel/preset-env": "^7.9.6",
     "babel-eslint": "^10.1.0",
+    "concurrently": "^5.2.0",
+    "dotenv": "^8.2.0",
     "eslint": "^7.0.0",
     "eslint-plugin-import": "^2.20.2",
+    "html-webpack-plugin": "^4.3.0",
+    "netlify-lambda": "^1.6.3",
     "parcel": "^1.12.4",
     "prettier": "^2.0.5"
   },
@@ -35,6 +44,12 @@
     "mapbox-gl": "^1.10.0",
     "nprogress": "^0.2.0",
     "papaparse": "^5.2.0",
+    "aws-sdk": "^2.677.0",
+    "axios": "^0.19.2",
+    "express": "^4.17.1",
+    "http-proxy-middleware": "^1.0.3",
+    "t": "^0.5.1",
+    "parcel-proxy-server": "^1.1.0",
     "shpjs": "^3.5.0",
     "topojson-client": "^3.1.0",
     "wellknown": "^0.5.0"

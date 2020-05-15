@@ -6,44 +6,73 @@
   <link rel="icon" type="image/png" href="./assets/favicon.png">
   <script src="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.js"></script>
   <link href="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.css" rel="stylesheet" />
-  <title>Geo Hack Project</title>
+  <title>Geospatial File Converter</title>
 
   <!-- CSS -->
   <link rel="stylesheet" href="../node_modules/nprogress/nprogress.css">
   <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./layers.css">
 </head>
 <body>
   <main>
-    <img src="./assets/logo-sparkgeo.svg" alt="Sparkgeo" >
-    <h1>File Converter Demo</h1>
+    <div style="display: flex;">
+      <div style="flex-grow: 1;">
+        <img src="./assets/logo-sparkgeo.svg" alt="Sparkgeo" >
+        <h1>View and share Geodata</h1>
 
-    <p>Drag and drop geospatial data files on the map, see them on the map! Supported:</p>
+        <p>Drag and drop geospatial data files on the map, see them on the map! Supported:</p>
 
-    <ul>
-      <li>CSV (uses columns "WKT", "fid", "note")</li>
-      <li>GeoJSON</li>
-      <li>TopoJSON</li>
-      <li>Shapefile</li>
-      <li>Geopackage</li>
-    </ul>
+        <ul>
+          <li>CSV (uses columns "WKT", "fid", "note")</li>
+          <li>GeoJSON</li>
+          <li>TopoJSON</li>
+          <li>Shapefile</li>
+          <li>Geopackage</li>
+        </ul>
+
+        <p><em>(but only in ESPG 4326)</em></p>
+      </div>
+      <div id="error-toaster"></div>
+    </div>
 
 
     <hr />
+    <div id="main-panels-container">
 
-    <section class="drag-drop-container">
+      <section class="drag-drop-container">
 
-      <p>drop files here</p>
+        <p>drop files here</p>
 
+      </section>
+
+      <div id="map" class="main-panels">
+
+        <p>Drag Drop items here</p>
+
+      </div>
+      <div id="layers" class="main-panels">
+        <div id="layers-header">Layers</div>
+        <div id="layers-list-container"></div>
+        <div id="layers-list-footer">
+          <input
+            id="dnd-replace"
+            type="checkbox" />
+          <label for="dnd-replace">
+            Replace existing data
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <section class="share-container">
+      <h2>Generate a sharing link</h2>
+      <input type="text" id="link-field" placeholder="Generate link" />
+      <button id="generate-link">Generate</button>
     </section>
 
-    <div id="map">
-
-      <p>Drag Drop items here</p>
-
-    </div>
   </main>
   <footer>
-     <p>- We're working on it!</p>
+     <p>Made in 2020 by <a href="https://sparkgeo.com" rel="norefferer noopener" target="_blank">Sparkgeo</a></p>
   </footer>
 
 </body>

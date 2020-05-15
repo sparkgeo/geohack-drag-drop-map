@@ -6,6 +6,7 @@ import getArrayBufferFromFile from './getArrayBufferFromFile'
 import getStringFromFile from './getStringFromFile'
 import determineDataType from './determineDataType'
 import map, { swapLayer } from './map'
+import toaster from './toaster'
 
 function showPanel(e) {
   e.stopPropagation()
@@ -90,12 +91,12 @@ function handleDrop(e) {
       })
       .catch((e) => {
         NProgress.done()
-        alert(e.message)
+        toaster(`Unsupported file extension ${files[0].type}`)
       })
   } else {
-    alert('We only accept one file at a time')
+    NProgress.done()
+    toaster('We only accept one file at a time')
   }
-
   // prevent drag event from bubbling further
   return false
 }
@@ -113,4 +114,5 @@ function initializeDragDropEvents() {
   dropContainer.addEventListener('dragleave', hidePanel, false)
 }
 
+exports.handleGeojson = handleGeojson
 export default initializeDragDropEvents
