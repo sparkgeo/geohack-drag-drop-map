@@ -34,8 +34,10 @@
     "mapbox-gl": "^1.10.0",
     "nprogress": "^0.2.0",
     "papaparse": "^5.2.0",
-    "topojson-client": "^3.1.0",
     "shpjs": "^3.5.0",
+    "t": "^0.5.1",
+    "toastr": "^2.1.4",
+    "topojson-client": "^3.1.0",
     "wellknown": "^0.5.0"
   }
 }

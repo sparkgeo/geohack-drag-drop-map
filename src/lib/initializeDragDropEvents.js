@@ -1,11 +1,12 @@
 import NProgress from 'nprogress'
 
-import {CSV, TopoJSON, Shp} from './transformer'
+import { CSV, TopoJSON, Shp } from './transformer'
 
 import getArrayBufferFromFile from './getArrayBufferFromFile'
 import getStringFromFile from './getStringFromFile'
 import determineDataType from './determineDataType'
 import map, { swapLayer } from './map'
+import toastr from 'toastr'
 
 function showPanel(e) {
   e.stopPropagation()
@@ -81,10 +82,10 @@ function handleDrop(e) {
       })
       .catch((e) => {
         NProgress.done()
-        alert(e.message)
+        toastr.warning(`Unsupported file extension ${files[0].type}`, 'Warning!!!')
       })
   } else {
-    alert('We only accept one file at a time')
+    toastr.warning('We only accept one file at a time', 'Warning!!!')
   }
 
   // prevent drag event from bubbling further
