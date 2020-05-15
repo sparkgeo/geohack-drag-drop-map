@@ -33,6 +33,8 @@ export async function determineDataType(file) {
       return 'shp'
     case 'shp':
       throw new Error('This demo only accepts zipped shapefiles')
+    case 'gpkg':
+      return 'gpkg'
     default:
       throw new Error('Unknown file format')
   }

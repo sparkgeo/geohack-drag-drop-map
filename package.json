@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "parcel serve src/index.html --port 3000",
-    "build": "parcel build src/index.html",
+    "build": "parcel build src/index.html --no-minify --no-source-maps",
     "lint": "eslint \"src/**/*.js\""
   },
   "repository": {
@@ -22,8 +22,8 @@
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.9.6",
     "@babel/plugin-transform-runtime": "^7.9.6",
-    "@babel/preset-env": "^7.9.6",
     "@babel/polyfill": "^7.8.7",
+    "@babel/preset-env": "^7.9.6",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.0.0",
     "eslint-plugin-import": "^2.20.2",
@@ -31,11 +31,12 @@
     "prettier": "^2.0.5"
   },
   "dependencies": {
+    "@ngageoint/geopackage": "^3.0.0-beta.8",
     "mapbox-gl": "^1.10.0",
     "nprogress": "^0.2.0",
     "papaparse": "^5.2.0",
-    "topojson-client": "^3.1.0",
     "shpjs": "^3.5.0",
+    "topojson-client": "^3.1.0",
     "wellknown": "^0.5.0"
   }
 }
