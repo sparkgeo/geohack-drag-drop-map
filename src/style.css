@@ -1,5 +1,6 @@
 :root {
   --sparkgeo-brand-color: #e3842d;
+  --sparkgeo-brand-visited: #8f541e;
   --disabled: #aaa;
 }
 
@@ -29,20 +30,13 @@ footer {
   width: 100vw;
 }
 
-footer p::before {
-  content: '*';
+footer a {
   color: var(--sparkgeo-brand-color);
-  font-size: 40px;
-  position: relative;
-  top: 17px;
-  right: 12px;
 }
 
-footer p {
-  position: relative;
-  top: -7px;
+footer a:visited {
+  color: var(--sparkgeo-brand-visited);
 }
-
 
 h1 {
   text-transform: capitalize;
