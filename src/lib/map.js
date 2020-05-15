@@ -1,11 +1,29 @@
 mapboxgl.accessToken = process.env.MAPBOX_TOKEN
 const layerName = 'geojson-layer'
 
+const zoomToFeatures = (mapData) => {
+  const bounds = new mapboxgl.LngLatBounds()
+  mapData.features.forEach(({ geometry: { coordinates } }) => {
+    processPoints(coordinates, bounds.extend, bounds)
+  })
+  map.fitBounds(bounds, { padding: 35 })
+}
+
+const processPoints = (geometry, callback, thisArg) => {
+  if (!Array.isArray(geometry[0])) {
+    callback.call(thisArg, geometry)
+  } else {
+    geometry.forEach(function (g) {
+      processPoints(g, callback, thisArg)
+    })
+  }
+}
+
 const map = new mapboxgl.Map({
   container: 'map',
   style: 'mapbox://styles/mapbox/light-v9',
-  center: [-20.7453699, 53.9128645],
-  zoom: 1,
+  center: [-10, 30],
+  zoom: 2,
 })
 
 map.on('load', function () {
@@ -59,6 +77,7 @@ export function swapLayer(data) {
   if (map.getSource(layerName) !== undefined) {
     map.getSource(layerName).setData(data)
   }
+  zoomToFeatures(data)
 }
 
 export function subscribeToDataUpdates(callback) {
