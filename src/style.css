@@ -18,7 +18,7 @@ main {
 }
 
 footer {
-  position: absolute;
+  position: fixed;
   display: flex;
   align-items: center;
   ;
@@ -27,6 +27,8 @@ footer {
   background: white;
   padding-left: 40px;
   width: 100vw;
+
+  z-index: 9001;
 }
 
 footer p::before {
