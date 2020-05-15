@@ -48,6 +48,24 @@ h1 {
   text-transform: capitalize;
 }
 
+.sharing-container {
+  width: 70vw;
+  margin: 0 auto;
+
+}
+
+.sharing-container input[type="text"] {
+  width: 200px;
+  height: 20px;
+  padding-right: 50px;
+}
+
+.sharing-container input[type="submit"] {
+  margin-left: -50px;
+  height: 20px;
+  width: 50px;
+}
+
 
 /* Make clicks pass-through */
 #nprogress {
