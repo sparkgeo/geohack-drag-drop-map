@@ -1,4 +1,5 @@
 import getStringFromFile from './getStringFromFile'
+import toaster from './toaster'
 
 function verifyJsonFormat(file) {
   return getStringFromFile(file)
@@ -6,7 +7,7 @@ function verifyJsonFormat(file) {
       return JSON.parse(result).type === 'Topology' ? 'topojson' : 'geojson'
     })
     .catch(() => {
-      alert('Unknown JSON format')
+      toaster('Unknown JSON format')
       return ''
     })
 }

@@ -110,13 +110,29 @@ li.disabled::after {
   color: var(--sparkgeo-brand-color);
 }
 
-div.error-toaster {
+div#error-toaster {
     background-color: brown;
     height: 70px;
-    width: 300px;
+    width: 250px;
+    padding: 0 10px;
     border-radius: 15px;
     align-items: center;
     justify-content: center;
     display: flex;
     color:white;
+    flex-direction: column;
+    visibility: visible;
+    visibility: hidden;
+}
+
+div.warning-toaster-text::before {
+  content: "\26A0";
+}
+
+div.warning-toaster-text {
+  font-weight: bold;
+}
+
+div.warning-toaster-content {
+  font-size:small;
 }
