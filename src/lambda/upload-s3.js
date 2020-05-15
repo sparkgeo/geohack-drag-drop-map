@@ -1,8 +1,5 @@
 require('dotenv').config()
 const AWS = require('aws-sdk')
-const cuid = require('cuid')
-
-// TODO: Test this. It likely doesn't work right now...
 
 const fromBase64 = (encodedValue) =>
   Buffer.from(encodedValue, 'base64').toString('utf8')
@@ -10,10 +7,9 @@ const fromBase64 = (encodedValue) =>
 const parseBody = (body, isBase64Encoded) =>
   JSON.parse(isBase64Encoded ? fromBase64(body) : body)
 
-const removeSpace = (file) => file.split(' ').join('-')
-
 exports.handler = (event, _context, callback) => {
   const Bucket = 'data-converter.sparkgeo.app'
+
   let response
 
   if (event.httpMethod !== 'POST') {
@@ -23,13 +19,13 @@ exports.handler = (event, _context, callback) => {
   const s3 = new AWS.S3({
     accessKeyId: process.env.FUNCTIONS_AWS_ACCESS_KEY,
     secretAccessKey: process.env.FUNCTIONS_AWS_SECRET_KEY,
-    region: 'us-east-1',
+    region: 'us-west-2',
   })
 
   try {
     const body = parseBody(event.body, event.isBase64Encoded)
 
-    const Key = `image-${cuid()}-${removeSpace(body.clientFilename)}`
+    const Key = body.clientFilename
 
     const putParams = {
       Bucket,
@@ -47,23 +43,16 @@ exports.handler = (event, _context, callback) => {
       ResponseCacheControl: 'max-age=604800',
     }
 
-    const getUrl = s3.getSignedUrl('getObject', getParams)
-
     response = {
       statusCode: 200,
       body: JSON.stringify({
         putUrl,
-        getUrl,
       }),
     }
-
-    // response = { statusCode: 200, body: 'it works' }
   } catch (e) {
     console.log('Error triggered ', e)
     response = { statusCode: 500, body: 'it does not work' }
   }
-
-  // console.log('body')
 
   return callback(null, response)
 }

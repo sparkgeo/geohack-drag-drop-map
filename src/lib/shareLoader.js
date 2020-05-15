@@ -4,7 +4,7 @@ import map, { swapLayer } from './map'
 
 const TOKEN_QUERY_PARAM_NAME = 'share_token'
 const SHARE_ROOT =
-  'https://s3.amazonaws.com/cdn.brianbancroft.io/assets/nanaimo-ladysmith'
+  'https://s3-us-west-2.amazonaws.com/data-converter.sparkgeo.app'
 
 function getShareToken() {
   const urlParams = new URLSearchParams(window.location.search)

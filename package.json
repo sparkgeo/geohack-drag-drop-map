@@ -42,7 +42,6 @@
   "dependencies": {
     "aws-sdk": "^2.677.0",
     "axios": "^0.19.2",
-    "cuid": "^2.1.8",
     "express": "^4.17.1",
     "http-proxy-middleware": "^1.0.3",
     "mapbox-gl": "^1.10.0",
