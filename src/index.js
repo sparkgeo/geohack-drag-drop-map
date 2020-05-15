@@ -2,17 +2,14 @@ import initializeDragDropEvents from './lib/initializeDragDropEvents'
 import initializeLayers from './layers'
 import generateRandomString from './lib/generateRandomString'
 import { exportMapData } from './lib/map'
-import copyToClipboard from './lib/copyToClipboard'
+import generateShareLink from './lib/generateShareLink'
 
 import axios, { post } from 'axios'
 
-const generateShareLink = (fileName) => {
-  const url = `https://https://data-converter.sparkgeo.app?share_token=${fileName}`
-  document.querySelector('#link-field').value = url
+initializeDragDropEvents()
+initializeLayers()
 
-  copyToClipboard(url)
-}
-
+// Shares the document
 document
   .querySelector('#generate-link')
   .addEventListener('click', async function () {
@@ -60,6 +57,3 @@ document
         })
     }
   })
-
-initializeDragDropEvents()
-initializeLayers()
