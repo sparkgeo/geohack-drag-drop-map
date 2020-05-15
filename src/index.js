@@ -1,5 +1,6 @@
 import initializeDragDropEvents from './lib/initializeDragDropEvents'
 import initializeLayers from './layers'
+import initializeShareLoader from './lib/shareLoader'
 
 document.querySelector('#generate-link').addEventListener('click', function () {
   console.log('Click detected')
@@ -15,3 +16,4 @@ document.querySelector('#generate-link').addEventListener('click', function () {
 
 initializeDragDropEvents()
 initializeLayers()
+initializeShareLoader()
