@@ -61,4 +61,12 @@ export function swapLayer(data) {
   }
 }
 
+export function subscribeToDataUpdates(callback) {
+  map.on('sourcedata', function (event) {
+    if (event.sourceId === layerName) {
+      callback(event.source.data)
+    }
+  })
+}
+
 export default map

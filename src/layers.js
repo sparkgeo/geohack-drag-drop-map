@@ -1,31 +1,27 @@
-import map, { swapLayer } from './lib/map'
+import map, { swapLayer, subscribeToDataUpdates } from './lib/map'
 
-let sourceData
+let sourceDataCache
 
 function initializeLayers() {
-  map.on('sourcedata', function (event) {
-    if (event.sourceId === 'geojson-layer') {
-      let visibleLayers = []
-      sourceData = event.source.data
-      const features =
-        sourceData && sourceData.features ? sourceData.features : []
-      if (features.length) {
-        visibleLayers = [
-          'Point',
-          'LineString',
-          'Polygon',
-          'MultiPolygon',
-        ].filter((layerName) => {
+  let visibleLayers = []
+  subscribeToDataUpdates(function (sourceData) {
+    sourceDataCache = sourceData
+    const features =
+      sourceData && sourceData.features ? sourceData.features : []
+    if (features.length) {
+      visibleLayers = ['Point', 'LineString', 'Polygon', 'MultiPolygon'].filter(
+        (layerName) => {
           return (
             features.filter((feature) =>
               filterFeatureByGeometryType(feature, layerName),
             ).length > 0
           )
-        })
-      }
-      document.getElementById('layers-list-container').innerHTML = visibleLayers
-        .map((visibleLayerName) => {
-          return `
+        },
+      )
+    }
+    document.getElementById('layers-list-container').innerHTML = visibleLayers
+      .map((visibleLayerName) => {
+        return `
           <div
             class="visible-layer"
             id="visible-layer-${visibleLayerName}">
@@ -40,13 +36,12 @@ function initializeLayers() {
               x
             </div>
           </div>`
-        })
-        .join('')
-    }
+      })
+      .join('')
   })
   document.addEventListener('removeLayer', (data) => {
-    const updatedSource = Object.assign({}, sourceData, {
-      features: sourceData.features.filter((feature) => {
+    const updatedSource = Object.assign({}, sourceDataCache, {
+      features: sourceDataCache.features.filter((feature) => {
         return !filterFeatureByGeometryType(feature, data.detail)
       }),
     })
