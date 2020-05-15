@@ -15,18 +15,23 @@
 </head>
 <body>
   <main>
-    <img src="./assets/logo-sparkgeo.svg" alt="Sparkgeo" >
-    <h1>File Converter Demo</h1>
-
-    <p>Drag and drop geospatial data files on the map, see them on the map! Supported:</p>
-
-    <ul>
-      <li>CSV (uses columns "WKT", "fid", "note")</li>
-      <li>GeoJSON</li>
-      <li>TopoJSON</li>
-      <li>Shapefile</li>
-      <li class="disabled">Geopackage</li>
-    </ul>
+    <div style="display: flex;">
+      <div style="flex-grow: 1;">
+        <img src="./assets/logo-sparkgeo.svg" alt="Sparkgeo" >
+        <h1>File Converter Demo</h1>
+    
+        <p>Drag and drop geospatial data files on the map, see them on the map! Supported:</p>
+    
+        <ul>
+          <li>CSV (uses columns "WKT", "fid", "note")</li>
+          <li>GeoJSON</li>
+          <li>TopoJSON</li>
+          <li>Shapefile</li>
+          <li class="disabled">Geopackage</li>
+        </ul>
+      </div>
+      <div id="error-toaster"></div>
+    </div>
 
 
     <hr />
