@@ -50,22 +50,27 @@ h1 {
   text-transform: capitalize;
 }
 
-.sharing-container {
-  width: 70vw;
+.share-container {
+  width: 93vw;
   margin: 0 auto;
-
+  font-size: 24px;
+  margin-bottom: 50px;
 }
 
-.sharing-container input[type="text"] {
-  width: 200px;
-  height: 20px;
+.share-container input[type="text"] {
+  width: 400px;
+  height: 35px;
+  padding-left: 10px;
   padding-right: 50px;
+  font-size: 18px;
 }
 
-.sharing-container input[type="submit"] {
+button#generate-link {
   margin-left: -50px;
-  height: 20px;
-  width: 50px;
+  height: 41px;
+  width: 110px;
+  position: relative;
+  bottom: 2px;
 }
 
 
