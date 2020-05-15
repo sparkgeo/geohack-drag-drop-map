@@ -109,3 +109,14 @@ li.disabled::after {
   content: '*';
   color: var(--sparkgeo-brand-color);
 }
+
+div.error-toaster {
+    background-color: brown;
+    height: 70px;
+    width: 300px;
+    border-radius: 15px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    color:white;
+}
