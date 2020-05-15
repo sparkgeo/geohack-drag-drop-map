@@ -24,14 +24,13 @@ document
 
     fileData = JSON.stringify(data)
 
+    // Generates tempoary signed url for uploading data
     const { data } = await post(generateSignedS3Url, {
       clientFilename: fileName,
       mimeType: fileType,
     }).catch((e) => {
       console.error('Error in generating signed url ', e)
     })
-
-    // Tempoary Url for uploading data
 
     // create a `File` object
     const file = new File([data], fileName, { type: fileType })
@@ -44,8 +43,6 @@ document
     }).catch((e) => {
       console.error('Error in uploading file ', e)
     })
-
-    // TODO upload geojson file into s3
 
     // TODO update sharing link with link url
   })

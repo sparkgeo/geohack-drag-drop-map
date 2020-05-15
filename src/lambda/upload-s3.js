@@ -2,8 +2,6 @@ require('dotenv').config()
 const AWS = require('aws-sdk')
 const cuid = require('cuid')
 
-// TODO: Test this. It likely doesn't work right now...
-
 const fromBase64 = (encodedValue) =>
   Buffer.from(encodedValue, 'base64').toString('utf8')
 // ----------------------------------------------------------------------------------- //
@@ -13,7 +11,9 @@ const parseBody = (body, isBase64Encoded) =>
 const removeSpace = (file) => file.split(' ').join('-')
 
 exports.handler = (event, _context, callback) => {
-  const Bucket = 'data-converter.sparkgeo.app'
+  // const Bucket = 'data-converter.sparkgeo.app'
+  const Bucket = 'nick-image-recognition-test'
+
   let response
 
   if (event.httpMethod !== 'POST') {
@@ -29,7 +29,7 @@ exports.handler = (event, _context, callback) => {
   try {
     const body = parseBody(event.body, event.isBase64Encoded)
 
-    const Key = `image-${cuid()}-${removeSpace(body.clientFilename)}`
+    const Key = body.clientFilename
 
     const putParams = {
       Bucket,
@@ -47,13 +47,13 @@ exports.handler = (event, _context, callback) => {
       ResponseCacheControl: 'max-age=604800',
     }
 
-    const getUrl = s3.getSignedUrl('getObject', getParams)
+    // const getUrl = s3.getSignedUrl('getObject', getParams)
 
     response = {
       statusCode: 200,
       body: JSON.stringify({
         putUrl,
-        getUrl,
+        // getUrl,
       }),
     }
 
