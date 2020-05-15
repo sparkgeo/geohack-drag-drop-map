@@ -1,0 +1,19 @@
+#layers-header {
+  padding: 1em;
+  border-radius-top: 25px;
+  border-bottom: 2px solid #ccc;
+  margin-bottom: 5px;
+}
+
+#layers-list-container .visible-layer {
+  justify-content: space-between;
+  display: flex;
+  font-size: 0.9em;
+  margin: 0.5em;
+}
+
+.visible-layer-remover {
+  margin-left: 10px;
+  cursor: pointer;
+  color: darkred;
+}
