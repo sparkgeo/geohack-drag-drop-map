@@ -11,8 +11,8 @@ const parseBody = (body, isBase64Encoded) =>
 const removeSpace = (file) => file.split(' ').join('-')
 
 exports.handler = (event, _context, callback) => {
-  // const Bucket = 'data-converter.sparkgeo.app'
-  const Bucket = 'nick-image-recognition-test'
+  const Bucket = 'data-converter.sparkgeo.app'
+  // const Bucket = 'nick-image-recognition-test'
 
   let response
 

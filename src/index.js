@@ -13,8 +13,6 @@ document
     const fileName = `${generateRandomString()}.json`
     const fileType = 'text/plain'
 
-    console.log('file name ', fileName)
-
     let fileData = exportMapData()
 
     // Do nothing if no data present
@@ -22,7 +20,7 @@ document
       return false
     }
 
-    fileData = JSON.stringify(data)
+    fileData = JSON.stringify(fileData)
 
     // Generates tempoary signed url for uploading data
     const { data } = await post(generateSignedS3Url, {
@@ -33,7 +31,7 @@ document
     })
 
     // create a `File` object
-    const file = new File([data], fileName, { type: fileType })
+    const file = new File([fileData], fileName, { type: fileType })
 
     await axios({
       method: 'PUT',
