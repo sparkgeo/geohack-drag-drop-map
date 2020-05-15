@@ -2,6 +2,7 @@ import { SwapStrategy } from './swapStrategy'
 
 mapboxgl.accessToken = process.env.MAPBOX_TOKEN
 const layerName = 'geojson-layer'
+export const defaultOrderedLayers = ['Point', 'LineString', 'Polygon']
 export const defaultSwapStrategy = SwapStrategy.REPLACE
 
 let sourceDataCache
@@ -25,6 +26,70 @@ const processPoints = (geometry, callback, thisArg) => {
   }
 }
 
+export function orderLayersBy(requestedOrder) {
+  defaultOrderedLayers.forEach((layerType) => {
+    const layerId = getLayerId(layerType)
+    if (!!map.getLayer(layerId)) {
+      map.removeLayer(layerId)
+    }
+  })
+  requestedOrder
+    .slice(0)
+    .reverse()
+    .forEach((layerType) => {
+      addMapLayer(layerType)
+    })
+}
+
+const getLayerId = (type) => {
+  return `sparkgeo-${type}`
+}
+
+const addMapLayer = (type) => {
+  switch (type) {
+    case 'Point':
+      map.addLayer({
+        id: getLayerId(type),
+        type: 'circle',
+        source: layerName,
+        paint: {
+          'circle-radius': 6,
+          'circle-color': '#B42222',
+        },
+        filter: ['==', '$type', 'Point'],
+      })
+      break
+    case 'Polygon':
+      map.addLayer({
+        id: getLayerId(type),
+        type: 'fill',
+        source: layerName,
+        paint: {
+          'fill-color': '#140beb',
+          'fill-opacity': 0.4,
+        },
+        filter: ['==', '$type', 'Polygon'],
+      })
+      break
+    case 'LineString':
+      map.addLayer({
+        id: getLayerId(type),
+        type: 'line',
+        source: layerName,
+        layout: {
+          'line-join': 'round',
+          'line-cap': 'round',
+        },
+        paint: {
+          'line-color': '#fdd53a',
+          'line-width': 8,
+        },
+        filter: ['==', '$type', 'LineString'],
+      })
+      break
+  }
+}
+
 const map = new mapboxgl.Map({
   container: 'map',
   style: 'mapbox://styles/mapbox/light-v9',
@@ -40,43 +105,12 @@ map.on('load', function () {
       features: [],
     },
   })
-
-  map.addLayer({
-    id: 'sparkgeo-polygon',
-    type: 'fill',
-    source: layerName,
-    paint: {
-      'fill-color': '#140beb',
-      'fill-opacity': 0.4,
-    },
-    filter: ['==', '$type', 'Polygon'],
-  })
-
-  map.addLayer({
-    id: 'sparkgeo-point',
-    type: 'circle',
-    source: layerName,
-    paint: {
-      'circle-radius': 6,
-      'circle-color': '#B42222',
-    },
-    filter: ['==', '$type', 'Point'],
-  })
-
-  map.addLayer({
-    id: 'sparkgeo-line',
-    type: 'line',
-    source: layerName,
-    layout: {
-      'line-join': 'round',
-      'line-cap': 'round',
-    },
-    paint: {
-      'line-color': '#fdd53a',
-      'line-width': 8,
-    },
-    filter: ['==', '$type', 'LineString'],
-  })
+  defaultOrderedLayers
+    .slice(0)
+    .reverse()
+    .forEach((layerType) => {
+      addMapLayer(layerType)
+    })
 })
 
 export function swapLayer(data, requestedSwapStrategy) {
