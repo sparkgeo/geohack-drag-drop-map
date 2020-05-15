@@ -10,10 +10,13 @@
   display: flex;
   font-size: 0.9em;
   margin: 0.5em;
+  line-height: 1.5em;
 }
 
 .visible-layer-remover {
   margin-left: 10px;
   cursor: pointer;
   color: darkred;
+  padding: 0 10px;
+  font-size: 1.5em;
 }
