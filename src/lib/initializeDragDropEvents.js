@@ -6,7 +6,6 @@ import getArrayBufferFromFile from './getArrayBufferFromFile'
 import getStringFromFile from './getStringFromFile'
 import determineDataType from './determineDataType'
 import map, { swapLayer } from './map'
-import toastr from 'toastr'
 
 function showPanel(e) {
   e.stopPropagation()
@@ -82,10 +81,10 @@ function handleDrop(e) {
       })
       .catch((e) => {
         NProgress.done()
-        toastr.warning(`Unsupported file extension ${files[0].type}`, 'Warning!!!')
+        alert(`Unsupported file extension ${files[0].type}`)
       })
   } else {
-    toastr.warning('We only accept one file at a time', 'Warning!!!')
+    alert('We only accept one file at a time')
   }
 
   // prevent drag event from bubbling further
