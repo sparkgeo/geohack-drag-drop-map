@@ -17,6 +17,10 @@
   line-height: 1.5em;
 }
 
+.visible-layer-name {
+  width: 100%;
+}
+
 .visible-layer-remover {
   margin-left: 10px;
   cursor: pointer;

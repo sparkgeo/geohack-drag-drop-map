@@ -1,6 +1,6 @@
 import NProgress from 'nprogress'
 
-import { CSV, TopoJSON, Shp } from './transformer'
+import { CSV, TopoJSON, Shp, GeoPackage } from './transformer'
 
 import getArrayBufferFromFile from './getArrayBufferFromFile'
 import getStringFromFile from './getStringFromFile'
@@ -50,6 +50,13 @@ async function handleGeojson(data) {
   NProgress.done()
 }
 
+async function handleGpkg(data) {
+  const parsedData = await getArrayBufferFromFile(data)
+  const geojson = await new GeoPackage(parsedData).geojson()
+  swapLayer(geojson)
+  NProgress.done()
+}
+
 function handleDrop(e) {
   e.preventDefault()
   e.stopPropagation()
@@ -75,6 +82,8 @@ function handleDrop(e) {
             return handleShp(files[0])
           case 'geojson':
             return handleGeojson(files[0])
+          case 'gpkg':
+            return handleGpkg(files[0])
         }
       })
       .then((json) => {
